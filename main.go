@@ -1,11 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"image"
+	"fmt"   // Standard package for formatting
+	"image" // Package for reading images
 	"image/color"
 	"image/png"
-	"os"
+	"os" // Package for handling files
 )
 
 func main() {
@@ -17,7 +17,7 @@ func main() {
 		fmt.Printf("Failed to open %s: %s", fi, err)
 		panic(err.Error())
 	}
-	defer inputImg.Close() // Close file
+	defer inputImg.Close() // Close file either when the function is finished or there's a panic
 
 	// Decodes image to get its values
 	imgData, _, err := image.Decode(inputImg)
@@ -25,6 +25,7 @@ func main() {
 		panic(err.Error())
 	}
 
+	// Greyscale function
 	// Get dimensions of image
 	imgBound := imgData.Bounds()
 	imgWidth, imgHeight := imgBound.Max.X, imgBound.Max.Y
