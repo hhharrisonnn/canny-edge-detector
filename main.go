@@ -1,10 +1,13 @@
 package main
 
 import (
-	"fmt"       // Standard package for Go formatting
+	"fmt" // Standard package for Go formatting
+	greyscale "github.com/hhharrisonnn/canny-edge-detector/src"
+	"io"
 	"io/ioutil" // Package for reading/writing files
 	"log"       // For logging errors
 	"net/http"  // Anything HTTP related - start web servers, handling requests
+	"os"
 )
 
 func uploadFile(w http.ResponseWriter, r *http.Request) {
@@ -37,11 +40,34 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 
 	reDir := "javascript:history.back()"
 	fmt.Fprintf(w, "<a href=%q>Click on this to see the steps!</a>", reDir)
+
+	greyscale.Greyscale() // Activate Greyscale function after receiving the image
 }
 
-// Starts simple web server
+// Function to check if a directory is empty
+func emptyDir(dirName string) bool {
+	file, err := os.Open(dirName)
+	if err != nil {
+		return false
+	}
+	defer file.Close()
+
+	_, err = file.Readdirnames(1)
+	if err == io.EOF {
+		return true
+	}
+	return false
+}
+
 func main() {
-	http.HandleFunc("/upload", uploadFile)
+	if emptyDir("./img/") == true { // If directory is empty
+		http.HandleFunc("/upload", uploadFile)
+	}
+	if emptyDir("./img/") == false { // If directory is not empty
+		greyscale.Greyscale() // Activates Greyscale function
+	}
+
+	// Starts simple web server
 	if err := http.ListenAndServe("localhost:8080", nil); err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}

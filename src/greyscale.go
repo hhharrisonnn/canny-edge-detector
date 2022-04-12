@@ -5,12 +5,21 @@ import (
 	"image"
 	"image/color"
 	"image/png"
+	"io/ioutil"
+	"log"
 	"os"
+	"os/user"
 )
 
 func Greyscale() {
+	// Get file name
+	files, err := ioutil.ReadDir("./img")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fi := "./img/" + files[0].Name()
+
 	// Open image file
-	fi := "./img/test.png"
 	inputImg, err := os.Open(fi)
 	// If there is an error that exists then print it
 	if err != nil {
@@ -43,7 +52,8 @@ func Greyscale() {
 	}
 
 	// Encode the image
-	newFi, err := os.Create("greyscale.png")
+	userPath, _ := user.Current()
+	newFi, err := os.Create(userPath.HomeDir + "/canny-edge-detector/img/grayscale.png")
 	if err != nil {
 		fmt.Printf("Failed to create %s: %s", newFi, err)
 		panic(err.Error())
