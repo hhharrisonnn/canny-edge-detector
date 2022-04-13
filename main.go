@@ -8,6 +8,7 @@ import (
 	"log"       // For logging errors
 	"net/http"  // Anything HTTP related - start web servers, handling requests
 	"os"
+	"os/user"
 )
 
 func uploadFile(w http.ResponseWriter, r *http.Request) {
@@ -60,6 +61,15 @@ func emptyDir(dirName string) bool {
 }
 
 func main() {
+	// If there's anything in the img directory, remove it
+	files, _ := ioutil.ReadDir("./img/")
+	userPath, _ := user.Current()
+	if len(files) != 0 {
+		for _, f := range files {
+			os.Remove(userPath.HomeDir + "/canny-edge-detector/img/" + f.Name())
+		}
+	}
+
 	if emptyDir("./img/") == true { // If directory is empty
 		http.HandleFunc("/upload", uploadFile)
 	}
