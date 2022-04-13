@@ -44,6 +44,18 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	greyscale.Greyscale() // Activate Greyscale function after receiving the image
 }
 
+// Receive input from the menu and return an image
+func postImage(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	menuValue := r.FormValue("steps")
+
+	if menuValue == "Greyscale" {
+		path := "img/grayscale.png"
+		fmt.Fprintf(w, "<h1>Greyscale image</h1>")
+		fmt.Fprintf(w, "<img src=%q>", path)
+	}
+}
+
 func main() {
 	// If there's anything in the img directory, remove it
 	files, _ := ioutil.ReadDir("./img/")
@@ -57,6 +69,11 @@ func main() {
 	if len(files) == 0 {
 		http.HandleFunc("/upload", uploadFile)
 	}
+
+	// Handler function for request
+	http.HandleFunc("/", postImage)
+	// Handle requests for 'img' directory
+	http.Handle("/img/", http.StripPrefix("/img/", http.FileServer(http.Dir("./img"))))
 
 	// Starts simple web server
 	if err := http.ListenAndServe("localhost:8080", nil); err != nil {
