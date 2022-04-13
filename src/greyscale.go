@@ -1,4 +1,4 @@
-package greyscale
+package canny
 
 import (
 	"fmt"
