@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt" // Standard package for Go formatting
-	greyscale "github.com/hhharrisonnn/canny-edge-detector/src"
+	canny "github.com/hhharrisonnn/canny-edge-detector/src"
 	"io/ioutil" // Package for reading/writing files
 	"log"       // For logging errors
 	"net/http"  // Anything HTTP related - start web servers, handling requests
@@ -41,7 +41,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	reDir := "javascript:history.back()"
 	fmt.Fprintf(w, "<a href=%q>Click on this to see the steps!</a>", reDir)
 
-	greyscale.Greyscale() // Activate Greyscale function after receiving the image
+	canny.Greyscale() // Activate Greyscale function after receiving the image
 }
 
 // Receive input from the menu and return an image
