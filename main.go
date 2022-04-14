@@ -41,17 +41,24 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	reDir := "javascript:history.back()"
 	fmt.Fprintf(w, "<a href=%q>Click on this to see the steps!</a>", reDir)
 
-	canny.Greyscale() // Activate Greyscale function after receiving the image
+	canny.Greyscale()            // Activate Greyscale function after receiving the image
+	canny.GaussianConvolution(1) // Activate Gaussian function after Greyscale function
 }
 
 // Receive input from the menu and return an image
 func postImage(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	menuValue := r.FormValue("steps")
-
+	// If user selects the first step
 	if menuValue == "Greyscale" {
 		path := "img/grayscale.png"
 		fmt.Fprintf(w, "<h1>Greyscale image</h1>")
+		fmt.Fprintf(w, "<img src=%q>", path)
+	}
+	// If user selects the second step
+	if menuValue == "Gaussian" {
+		path := "img/gaussianBlur.png"
+		fmt.Fprintf(w, "<h1>Gaussian Blur</h1>")
 		fmt.Fprintf(w, "<img src=%q>", path)
 	}
 }
