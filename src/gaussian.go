@@ -89,7 +89,7 @@ func GaussianConvolution(sigma float64) {
 	}
 
 	// Stores final image values
-	newImage := image.NewGray((image.Rectangle{image.Point{0, 0}, image.Point{imgWidth, imgHeight}}))
+	newImage := image.NewGray((image.Rectangle{image.Point{2, 2}, image.Point{imgWidth - 2, imgHeight - 2}}))
 	// Iterate over pixels, get surrounding pixels in 5x5 area, and convolve them
 	for j := 2; j < imgHeight-2; j++ {
 		for i := 2; i < imgWidth-2; i++ {
