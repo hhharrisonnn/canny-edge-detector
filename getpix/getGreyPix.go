@@ -1,8 +1,25 @@
 package getpix
 
-import "image"
+import (
+	"fmt"
+	"image"
+	"os"
+)
 
-func GetGrey(imgData image.Image) ([][]float64, int, int) {
+func GetGrey(fi string) ([][]float64, int, int) {
+	// Open greyscale.png
+	inputImg, err := os.Open(fi)
+	if err != nil {
+		fmt.Printf("Failed to open %s: %s", fi, err)
+		panic(err.Error())
+	}
+	defer inputImg.Close()
+
+	imgData, _, err := image.Decode(inputImg)
+	if err != nil {
+		panic(err.Error())
+	}
+
 	// Get image dimensions
 	imgBound := imgData.Bounds()
 	imgWidth, imgHeight := imgBound.Max.X, imgBound.Max.Y

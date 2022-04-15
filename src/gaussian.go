@@ -54,21 +54,7 @@ func GaussianKernel(i, j int8, sigma float64) float64 {
 }
 
 func GaussianConvolution(sigma float64) {
-	// Open greyscale.png
-	fi := "./img/grayscale.png"
-	inputImg, err := os.Open(fi)
-	if err != nil {
-		fmt.Printf("Failed to open %s: %s", fi, err)
-		panic(err.Error())
-	}
-	defer inputImg.Close()
-
-	imgData, _, err := image.Decode(inputImg)
-	if err != nil {
-		panic(err.Error())
-	}
-
-	imageIndex, imgWidth, imgHeight := getpix.GetGrey(imgData)
+	imageIndex, imgWidth, imgHeight := getpix.GetGrey("./img/grayscale.png")
 
 	// Stores final image values
 	newImage := image.NewGray((image.Rectangle{image.Point{2, 2}, image.Point{imgWidth - 2, imgHeight - 2}}))
