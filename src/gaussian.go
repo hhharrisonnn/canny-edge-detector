@@ -2,6 +2,7 @@ package canny
 
 import (
 	"fmt"
+	"github.com/hhharrisonnn/canny-edge-detector/getpix"
 	"image"
 	"image/color"
 	"image/png"
@@ -67,26 +68,7 @@ func GaussianConvolution(sigma float64) {
 		panic(err.Error())
 	}
 
-	// Get image dimensions
-	imgBound := imgData.Bounds()
-	imgWidth, imgHeight := imgBound.Max.X, imgBound.Max.Y
-
-	// Make 2D slice with dimensions imgWidth x imgHeight
-	imageIndex := make([][]float64, imgWidth)
-	for i := range imageIndex {
-		imageIndex[i] = make([]float64, imgHeight)
-	}
-
-	// Iterate over image to get only grey values
-	for y := 0; y < imgHeight; y++ {
-		for x := 0; x < imgWidth; x++ {
-			imgColour := imgData.At(x, y)
-			pixelGreyValue, _, _, _ := imgColour.RGBA()
-			Y := uint8(pixelGreyValue)
-			greyColour := float64(Y)
-			imageIndex[x][y] = greyColour // Add greyColour to imageIndex
-		}
-	}
+	imageIndex, imgWidth, imgHeight := getpix.GetGrey(imgData)
 
 	// Stores final image values
 	newImage := image.NewGray((image.Rectangle{image.Point{2, 2}, image.Point{imgWidth - 2, imgHeight - 2}}))
