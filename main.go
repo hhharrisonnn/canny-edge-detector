@@ -43,6 +43,7 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 
 	canny.Greyscale()            // Activate Greyscale function after receiving the image
 	canny.GaussianConvolution(1) // Activate Gaussian function after Greyscale function
+	canny.SobelConvolution()     // Activate Sobel convolutions after Gaussian function
 }
 
 // Receive input from the menu and return an image
@@ -59,6 +60,12 @@ func postImage(w http.ResponseWriter, r *http.Request) {
 	if menuValue == "Gaussian" {
 		path := "img/gaussianBlur.png"
 		fmt.Fprintf(w, "<h1>Gaussian Blur</h1>")
+		fmt.Fprintf(w, "<img src=%q>", path)
+	}
+	// If user selects the third step
+	if menuValue == "Sobel" {
+		path := "img/sobel.png"
+		fmt.Fprintf(w, "<h1>Sobel filter</h1>")
 		fmt.Fprintf(w, "<img src=%q>", path)
 	}
 }
