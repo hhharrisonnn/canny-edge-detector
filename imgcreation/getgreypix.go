@@ -1,4 +1,4 @@
-package getpix
+package imgcreation
 
 import (
 	"fmt"
