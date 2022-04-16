@@ -1,14 +1,10 @@
 package canny
 
 import (
-	"fmt"
-	"github.com/hhharrisonnn/canny-edge-detector/getpix"
+	"github.com/hhharrisonnn/canny-edge-detector/imgcreation"
 	"image"
 	"image/color"
-	"image/png"
 	"math"
-	"os"
-	"os/user"
 )
 
 func GaussianKernel(i, j int8, sigma float64) float64 {
@@ -54,7 +50,7 @@ func GaussianKernel(i, j int8, sigma float64) float64 {
 }
 
 func GaussianConvolution(sigma float64) {
-	imageIndex, imgWidth, imgHeight := getpix.GetGrey("./img/grayscale.png")
+	imageIndex, imgWidth, imgHeight := imgcreation.GetGrey("./img/greyscale.png")
 
 	// Stores final image values
 	newImage := image.NewGray((image.Rectangle{image.Point{2, 2}, image.Point{imgWidth - 2, imgHeight - 2}}))
@@ -92,13 +88,5 @@ func GaussianConvolution(sigma float64) {
 		}
 	}
 
-	// Encode the image
-	userPath, _ := user.Current()
-	newFi, err := os.Create(userPath.HomeDir + "/canny-edge-detector/img/gaussianBlur.png")
-	if err != nil {
-		fmt.Printf("Failed to create %s: %s", newFi, err)
-		panic(err.Error())
-	}
-	defer newFi.Close()
-	png.Encode(newFi, newImage)
+	imgcreation.Encode(newImage, "gaussian")
 }

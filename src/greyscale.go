@@ -2,13 +2,12 @@ package canny
 
 import (
 	"fmt"
+	"github.com/hhharrisonnn/canny-edge-detector/imgcreation"
 	"image"
 	"image/color"
-	"image/png"
 	"io/ioutil"
 	"log"
 	"os"
-	"os/user"
 )
 
 func Greyscale() {
@@ -51,13 +50,5 @@ func Greyscale() {
 		}
 	}
 
-	// Encode the image
-	userPath, _ := user.Current()
-	newFi, err := os.Create(userPath.HomeDir + "/canny-edge-detector/img/grayscale.png")
-	if err != nil {
-		fmt.Printf("Failed to create %s: %s", newFi, err)
-		panic(err.Error())
-	}
-	defer newFi.Close()
-	png.Encode(newFi, greyscale)
+	imgcreation.Encode(greyscale, "greyscale")
 }
