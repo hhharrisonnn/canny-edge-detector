@@ -1,14 +1,10 @@
 package canny
 
 import (
-	"fmt"
-	"github.com/hhharrisonnn/canny-edge-detector/getpix"
+	"github.com/hhharrisonnn/canny-edge-detector/imgcreation"
 	"image"
 	"image/color"
-	"image/png"
 	"math"
-	"os"
-	"os/user"
 )
 
 // Return points relative to midpoint of x kernel
@@ -35,8 +31,14 @@ func sobelY(i, j int) float64 {
 	return yMat[i+1][j+1]
 }
 
-func SobelConvolution() {
-	imageIndex, imgWidth, imgHeight := getpix.GetGrey("./img/gaussianBlur.png")
+func SobelConvolution() (*image.Gray, [][]float64) {
+	imageIndex, imgWidth, imgHeight := imgcreation.GetGrey("./img/gaussian.png")
+
+	// Initialise slice to store the angle of each gradient
+	theta := make([][]float64, imgWidth-1)
+	for i := range theta {
+		theta[i] = make([]float64, imgHeight-1)
+	}
 
 	// Stores final image values
 	// Must be one pixel shorter on each side, otherwise the sobel kernels would be out of bound
@@ -69,19 +71,18 @@ func SobelConvolution() {
 			// Get magnitude of gradients for the two directions
 			G := math.Sqrt(math.Pow(Gx, 2) + math.Pow(Gy, 2))
 
+			// Direction of gradient
+			theta[i][j] = math.Atan2(Gy, Gx) * 180 / math.Pi
+
 			// Magnitude of gradients go to the final image
 			greyColour := color.Gray{uint8(G)}
 			newImage.Set(i, j, greyColour)
 		}
 	}
+	return newImage, theta
+}
 
-	// Encode the image
-	userPath, _ := user.Current()
-	newFi, err := os.Create(userPath.HomeDir + "/canny-edge-detector/img/sobel.png")
-	if err != nil {
-		fmt.Printf("Failed to create %s: %s", newFi, err)
-		panic(err.Error())
-	}
-	defer newFi.Close()
-	png.Encode(newFi, newImage)
+func Sobel() {
+	newImage, _ := SobelConvolution()
+	imgcreation.Encode(newImage, "sobel")
 }
