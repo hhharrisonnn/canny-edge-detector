@@ -35,7 +35,7 @@ func sobelY(i, j int) float64 {
 	return yMat[i+1][j+1]
 }
 
-func SobelConvolutionX() {
+func SobelConvolution() {
 	imageIndex, imgWidth, imgHeight := getpix.GetGrey("./img/gaussianBlur.png")
 
 	// Stores final image values
