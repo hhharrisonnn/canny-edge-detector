@@ -69,7 +69,7 @@ func SobelConvolution() (*image.Gray, [][]float64) {
 				imageIndex[i+1][j-1]*sobelY(1, -1)
 
 			// Get magnitude of gradients for the two directions
-			G := math.Sqrt(math.Pow(Gx, 2) + math.Pow(Gy, 2))
+			G := math.Abs(Gx) + math.Abs(Gy)
 
 			// Direction of gradient
 			theta[i][j] = math.Atan2(Gy, Gx) * 180 / math.Pi
