@@ -58,7 +58,7 @@ func SobelConvolution() (*image.Gray, [][]float64) {
 				imageIndex[i+1][j-1]*sobelX(1, -1)
 
 			// Sobel convolution for y direction
-			Gy := imageIndex[i-1][j+1]*sobelX(-1, 1) +
+			Gy := imageIndex[i-1][j+1]*sobelY(-1, 1) +
 				imageIndex[i][j+1]*sobelY(0, 1) +
 				imageIndex[i+1][j+1]*sobelY(1, 1) +
 				imageIndex[i-1][j]*sobelY(-1, 1) +
