@@ -35,7 +35,7 @@ func NonMaxSuppression() {
 			}
 
 			if (int(imageIndex[i][j]) <= a) && (int(imageIndex[i][j])) <= b {
-				// If the current pixel is smaller the two other pixels, it is suppressed
+				// If the current pixel is smaller than the two other pixels, it is suppressed
 				imageIndex[i][j] = 0
 			} else {
 				// Otherwise, it is kept
