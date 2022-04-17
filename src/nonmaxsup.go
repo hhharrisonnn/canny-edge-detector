@@ -39,7 +39,7 @@ func NonMaxSuppression() {
 				imageIndex[i][j] = 0
 			} else {
 				// Otherwise, it is kept
-				imageIndex[i][j] = 255
+				imageIndex[i][j] *= 1
 			}
 
 			greyColour := color.Gray{uint8(imageIndex[i][j])}
