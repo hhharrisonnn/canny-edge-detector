@@ -7,7 +7,7 @@ import (
 	"math"
 )
 
-// Return points relative to midpoint of x kernel
+// Return points from the x kernel
 func sobelX(i, j int) float64 {
 	// Matrix for the x direction
 	xMat := [3][3]float64{
@@ -19,7 +19,7 @@ func sobelX(i, j int) float64 {
 	return xMat[i][j]
 }
 
-// Return points relative to midpoint of y kernel
+// Return points from the y kernel
 func sobelY(i, j int) float64 {
 	// Matrix for the y direction
 	yMat := [3][3]float64{
