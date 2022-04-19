@@ -34,12 +34,12 @@ func NonMaxSuppression() {
 				b = int(imageIndex[i+1][j+1])
 			}
 
-			if (int(imageIndex[i][j]) <= a) && (int(imageIndex[i][j])) <= b {
-				// If the current pixel is smaller than the two other pixels, it is suppressed
-				imageIndex[i][j] = 0
-			} else {
-				// Otherwise, it is kept
+			if (int(imageIndex[i][j]) >= a) && (int(imageIndex[i][j])) >= b {
+				// If the current pixel is larger than the other pixels then it is kept
 				imageIndex[i][j] *= 1
+			} else {
+				// Otherwise, suppressed
+				imageIndex[i][j] = 0
 			}
 
 			greyColour := color.Gray{uint8(imageIndex[i][j])}
