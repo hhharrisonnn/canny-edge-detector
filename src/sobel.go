@@ -16,7 +16,7 @@ func sobelX(i, j int) float64 {
 		{-1, 0, 1},
 	}
 
-	return xMat[i+1][j+1]
+	return xMat[i][j]
 }
 
 // Return points relative to midpoint of y kernel
@@ -28,7 +28,7 @@ func sobelY(i, j int) float64 {
 		{1, 2, 1},
 	}
 
-	return yMat[i+1][j+1]
+	return yMat[i][j]
 }
 
 func SobelConvolution() (*image.Gray, [][]float64) {
@@ -47,26 +47,26 @@ func SobelConvolution() (*image.Gray, [][]float64) {
 	for j := 1; j < imgHeight-1; j++ {
 		for i := 1; i < imgWidth-1; i++ {
 			// Sobel convolution for x direction
-			Gx := imageIndex[i-1][j+1]*sobelX(-1, 1) +
-				imageIndex[i][j+1]*sobelX(0, 1) +
-				imageIndex[i+1][j+1]*sobelX(1, 1) +
-				imageIndex[i-1][j]*sobelX(-1, 1) +
-				imageIndex[i][j]*sobelX(0, 0) +
-				imageIndex[i+1][j]*sobelX(1, 0) +
-				imageIndex[i-1][j-1]*sobelX(-1, -1) +
-				imageIndex[i+1][j-1]*sobelX(1, -1) +
-				imageIndex[i+1][j-1]*sobelX(1, -1)
+			Gx := imageIndex[i-1][j+1]*sobelX(0, 0) +
+				imageIndex[i][j+1]*sobelX(1, 0) +
+				imageIndex[i+1][j+1]*sobelX(2, 0) +
+				imageIndex[i-1][j]*sobelX(0, 1) +
+				imageIndex[i][j]*sobelX(1, 1) +
+				imageIndex[i+1][j]*sobelX(2, 1) +
+				imageIndex[i-1][j-1]*sobelX(0, 2) +
+				imageIndex[i+1][j-1]*sobelX(1, 2) +
+				imageIndex[i+1][j-1]*sobelX(2, 2)
 
 			// Sobel convolution for y direction
-			Gy := imageIndex[i-1][j+1]*sobelY(-1, 1) +
-				imageIndex[i][j+1]*sobelY(0, 1) +
-				imageIndex[i+1][j+1]*sobelY(1, 1) +
-				imageIndex[i-1][j]*sobelY(-1, 1) +
-				imageIndex[i][j]*sobelY(0, 0) +
-				imageIndex[i+1][j]*sobelY(1, 0) +
-				imageIndex[i-1][j-1]*sobelY(-1, -1) +
-				imageIndex[i+1][j-1]*sobelY(1, -1) +
-				imageIndex[i+1][j-1]*sobelY(1, -1)
+			Gy := imageIndex[i-1][j+1]*sobelY(0, 0) +
+				imageIndex[i][j+1]*sobelY(1, 0) +
+				imageIndex[i+1][j+1]*sobelY(2, 0) +
+				imageIndex[i-1][j]*sobelY(0, 1) +
+				imageIndex[i][j]*sobelY(1, 1) +
+				imageIndex[i+1][j]*sobelY(2, 1) +
+				imageIndex[i-1][j-1]*sobelY(0, 2) +
+				imageIndex[i+1][j-1]*sobelY(1, 2) +
+				imageIndex[i+1][j-1]*sobelY(2, 2)
 
 			// Get magnitude of gradients for the two directions
 			G := math.Abs(Gx) + math.Abs(Gy)
