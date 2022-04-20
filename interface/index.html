@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Canny Edge Detector</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
     <body>
         <h1>Canny Edge Detector</h1>
         <p>Click on the "Browse..." button to upload an image.</p>
-        <form enctype="multipart/form-data" action="http://localhost:8080/upload" method="POST">
+        <form enctype="multipart/form-data" action="http://localhost:8080/upload" method="POST" class="file-upload">
             <input type="file" name="inputFile">
             <input type="submit" value="Upload file...">
         </form>
