@@ -16,6 +16,7 @@ func Hysteresis() {
 
 	for j := 1; j < imgHeight-1; j++ {
 		for i := 1; i < imgWidth-1; i++ {
+			// If weak pixel has a strong pixel around it, it will also be strong
 			if imageIndex[i][j] == weak {
 				if (imageIndex[i-1][j+1] == strong) || (imageIndex[i][j+1] == strong) || (imageIndex[i+1][j+1] == strong) ||
 					(imageIndex[i-1][j] == strong) || (imageIndex[i][j] == strong) || (imageIndex[i+1][j] == strong) ||
