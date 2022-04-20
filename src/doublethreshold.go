@@ -17,8 +17,8 @@ func DoubleThreshold(highThresholdRatio float64, lowThresholdRatio float64) {
 
 	newImage := image.NewGray((image.Rectangle{image.Point{1, 1}, image.Point{imgWidth - 1, imgHeight - 1}}))
 
-	for j := 1; j < imgHeight; j++ {
-		for i := 1; i < imgWidth; i++ {
+	for j := 1; j < imgHeight-1; j++ {
+		for i := 1; i < imgWidth-1; i++ {
 			// 100% an edge
 			if imageIndex[i][j] >= highThreshold {
 				imageIndex[i][j] = strong
