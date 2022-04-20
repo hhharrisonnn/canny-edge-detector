@@ -10,7 +10,7 @@ func DoubleThreshold(highThresholdRatio float64, lowThresholdRatio float64) {
 	imageIndex, imgWidth, imgHeight := imgcreation.GetGrey("./img/nonmaxsup.png")
 
 	var strong float64 = 255
-	var weak float64 = 25
+	var weak float64 = 100
 
 	highThreshold := strong * highThresholdRatio
 	lowThreshold := highThreshold * lowThresholdRatio
