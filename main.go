@@ -41,10 +41,12 @@ func uploadFile(w http.ResponseWriter, r *http.Request) {
 	reDir := "javascript:history.back()"
 	fmt.Fprintf(w, "<a href=%q>Click on this to see the steps!</a>", reDir)
 
-	canny.Greyscale()            // Activate Greyscale function after receiving the image
-	canny.GaussianConvolution(1) // Activate Gaussian function after Greyscale function
-	canny.Sobel()                // Activate Sobel convolutions after Gaussian function
-	canny.NonMaxSuppression()    // Activate Non-Maximum Suppression after Sobel
+	canny.Greyscale()               // Activate Greyscale function after receiving the image
+	canny.GaussianConvolution(1)    // Activate Gaussian function after Greyscale function
+	canny.Sobel()                   // Activate Sobel convolutions after Gaussian function
+	canny.NonMaxSuppression()       // Activate Non-Maximum Suppression after Sobel
+	canny.DoubleThreshold(0.5, 0.3) // Activate Double threshold
+	canny.Hysteresis()              // Activate Hysteresis
 }
 
 // Receive input from the menu and return an image
@@ -72,6 +74,16 @@ func postImage(w http.ResponseWriter, r *http.Request) {
 	if menuValue == "NonMax" {
 		path := "img/nonmaxsup.png"
 		fmt.Fprintf(w, "<h1>Non-Maximum Suppression</h1>")
+		fmt.Fprintf(w, "<img src=%q>", path)
+	}
+	if menuValue == "Threshold" {
+		path := "img/doublethreshold.png"
+		fmt.Fprintf(w, "<h1>Double Threshold</h1>")
+		fmt.Fprintf(w, "<img src=%q>", path)
+	}
+	if menuValue == "Hysteresis" {
+		path := "img/hysteresis.png"
+		fmt.Fprintf(w, "<h1>Hysteresis</h1>")
 		fmt.Fprintf(w, "<img src=%q>", path)
 	}
 }
